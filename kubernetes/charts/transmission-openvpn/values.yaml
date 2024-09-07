@@ -17,7 +17,7 @@ fullnameOverride: ""
 
 config:
   openvpn:
-    existingSecret: ""
+    existingSecret: "openvpn"
   env: 
     PUID: "1000"
     PGID: "1000"
