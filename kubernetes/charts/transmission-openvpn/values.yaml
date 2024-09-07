@@ -19,9 +19,11 @@ config:
   openvpn:
     existingSecret: ""
   env: 
-    LOCAL_NETWORK: "10.0.0.0/8"
     PUID: "1000"
     PGID: "1000"
+    LOCAL_NETWORK: "10.0.0.0/8"
+    TRANSMISSION_DOWNLOAD_DIR: "/data/transmission/completed"
+    TRANSMISSION_INCOMPLETE_DIR: "/data/transmission/incomplete"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -37,8 +39,8 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  fsGroup: 1000
 
 securityContext:
   capabilities:
@@ -97,17 +99,15 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: media
+
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: media
+    mountPath: "/data/transmission/"
+    subPath: "data/transmission"
 
 nodeSelector: {}
 
