@@ -19,9 +19,9 @@ config:
   openvpn:
     existingSecret: ""
   env: 
-    LOCAL_NETWORK: "192.168.0.0/16"
-
-
+    LOCAL_NETWORK: "10.0.0.0/8"
+    PUID: "1000"
+    PGID: "1000"
 
 serviceAccount:
   # Specifies whether a service account should be created
