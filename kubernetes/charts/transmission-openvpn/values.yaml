@@ -24,7 +24,7 @@ config:
     LOCAL_NETWORK: "10.0.0.0/8"
     TRANSMISSION_DOWNLOAD_DIR: "/data/transmission/completed"
     TRANSMISSION_INCOMPLETE_DIR: "/data/transmission/incomplete"
-    OPENVPN_PROVIDER: "NORDVPN"
+    OPENVPN_PROVIDER: "PIA"
 
 serviceAccount:
   # Specifies whether a service account should be created
