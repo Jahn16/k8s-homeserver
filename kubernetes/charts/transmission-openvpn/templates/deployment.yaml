@@ -51,7 +51,7 @@ spec:
           {{- end }}
           envFrom:
             - configMapRef:
-              name: {{ include "transmission-openvpn.fullname" . }}
+                name: {{ include "transmission-openvpn.fullname" . }}
             - secretRef:
                 name: {{ .Values.config.openvpn.existingSecret }}
       {{- with .Values.volumes }}
