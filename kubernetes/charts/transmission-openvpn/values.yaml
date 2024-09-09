@@ -102,13 +102,18 @@ autoscaling:
 # Additional volumes on the output Deployment definition.
 volumes:
   - name: media
-
+    persistentVolumeClaim:
+      claimName: media
+  - name: config
+    emptyDir: {}
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
   - name: media
     mountPath: "/data/transmission/"
     subPath: "data/transmission"
+  - name: config
+    mountPath: "/config"
 
 nodeSelector: {}
 
