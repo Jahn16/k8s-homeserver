@@ -98,12 +98,18 @@ volumes:
 - name: config
   persistentVolumeClaim:
     claimName: servarr
+- name: media
+  persistentVolumeClaim:
+    className: media
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
 - name: config
   mountPath: "/config"
   subPath: sonarr
+- name: media
+  mountPath: "/config"
+  subPath: "/data"
 
 nodeSelector: {}
 
