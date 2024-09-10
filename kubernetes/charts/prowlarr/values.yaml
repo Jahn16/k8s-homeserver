@@ -96,12 +96,14 @@ autoscaling:
 # Additional volumes on the output Deployment definition.
 volumes: 
 - name: config
-  emptyDir: {}
+  persistentVolumeClaim:
+    claimName: servarr
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
 - name: config
   mountPath: "/config"
+  subPath: prowlarr
 
 nodeSelector: {}
 
