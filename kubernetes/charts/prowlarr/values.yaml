@@ -94,7 +94,7 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-- name: foo
+- name: config
   mountPath: "/config"
 
 nodeSelector: {}
