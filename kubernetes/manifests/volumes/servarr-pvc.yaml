@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: media
+  name: servarr
 spec:
   storageClassName: local-path
   accessModes:
