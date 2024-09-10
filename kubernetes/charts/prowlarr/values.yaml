@@ -14,6 +14,12 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+config:
+  env:
+    - PUID: "1000"
+    - PGID: "1000"
+    - TZ: "Etc/UTC"
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
