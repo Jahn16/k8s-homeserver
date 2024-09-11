@@ -45,8 +45,16 @@ ingress:
   # @default -- See values.yaml
   main:
     enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
     hosts:
       - host: searxng.jahn16.com
+        paths:
+          - path: /
+    tls:
+      - hosts: 
+        - searxng.jahn16.com
+        secretName: searxng-tls
 
 searxng:
   config:
