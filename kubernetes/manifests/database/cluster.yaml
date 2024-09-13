@@ -4,9 +4,8 @@ metadata:
   name: cluster
 spec:
   instances: 1
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.4
-  storage:
-    size: 1Gi
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.2
+  enableSuperuserAccess: true
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
@@ -14,4 +13,8 @@ spec:
     initdb:
       postInitSQL:
         - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+        - CREATE EXTENSION IF NOT EXISTS "cube";
+        - CREATE EXTENSION IF NOT EXISTS "earthdistance";
         - CREATE EXTENSION IF NOT EXISTS "vectors";
+  storage:
+    size: 10Gi
