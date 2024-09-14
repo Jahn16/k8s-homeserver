@@ -5,7 +5,7 @@
 # These entries are shared between all the Immich components
 
 env:
-  REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
+  REDIS_HOSTNAME: 'redis-master.redis'
   DB_HOSTNAME: "cluster-rw.cnpg-database"
   DB_DATABASE_NAME: "immich"
   DB_USERNAME: 
@@ -66,7 +66,7 @@ postgresql:
           CREATE EXTENSION vectors;
 
 redis:
-  enabled: true
+  enabled: false
   architecture: standalone
   auth:
     enabled: false
