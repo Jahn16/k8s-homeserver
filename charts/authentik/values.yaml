@@ -1,0 +1,45 @@
+---
+global:
+  env:
+    - name: AUTHENTIK_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: secret-key
+          key: password
+authentik:
+  error_reporting:
+    enabled: true
+  postgresql:
+    host: cluster-rw.cnpg-database
+    user: file:///postgres-creds/username
+    password: file:///postgres-creds/password
+  redis:
+    host: redis-master.redis
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts: [authentik.jahn16.com]
+    tls:
+      - secretName: authentik-tls
+        hosts: [authentik.jahn16.com]
+    https: false
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: postgres
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
+worker:
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: postgres
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
