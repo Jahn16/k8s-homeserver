@@ -1,3 +1,4 @@
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -7,8 +8,7 @@ spec:
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.2
   enableSuperuserAccess: true
   postgresql:
-    shared_preload_libraries:
-      - "vectors.so"
+    shared_preload_libraries: [vectors.so]
   bootstrap:
     initdb:
       postInitSQL:

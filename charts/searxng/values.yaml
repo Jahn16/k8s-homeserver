@@ -1,10 +1,10 @@
+---
 #
 # IMPORTANT NOTE
 #
 # This chart inherits from our common library chart. You can check the default values/options here:
 # https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
 #
-
 image:
   # -- image repository
   repository: searxng/searxng
@@ -12,20 +12,17 @@ image:
   tag: latest
   # -- image pull policy
   pullPolicy: Always
-
 # Explanation about each environment variables here:
 # https://docs.searxng.org/admin/installation-docker.html#command-line
 env:
-  INSTANCE_NAME: "jahn16"
-  BASE_URL: "https://searxng.jahn16.com/"
-  AUTOCOMPLETE: "true"
+  INSTANCE_NAME: jahn16
+  BASE_URL: https://searxng.jahn16.com/
+  AUTOCOMPLETE: 'true'
   # MORTY_URL: "http://morty:8080"
   # MORTY_KEY: "mysecretkey"
   # BIND_ADDRESS: "0.0.0.0:8080"
-
 controller:
-  strategy: "RollingUpdate"
-
+  strategy: RollingUpdate
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
 service:
@@ -33,29 +30,25 @@ service:
     ports:
       http:
         port: 8080
-
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
 persistence:
   config:
     enabled: false
-
 ingress:
   # -- Enable and configure ingress settings for the chart under this key.
   # @default -- See values.yaml
   main:
     enabled: true
     annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
       - host: searxng.jahn16.com
         paths:
           - path: /
     tls:
-      - hosts: 
-        - searxng.jahn16.com
+      - hosts: [searxng.jahn16.com]
         secretName: searxng-tls
-
 searxng:
   config:
     use_default_settings: true
@@ -65,7 +58,6 @@ searxng:
     # See https://docs.searxng.org/src/searx.plugins.limiter.html#limiter-plugin
     # server.limiter: true
     # redis.url: redis://@searxng-redis:6379/0
-
 probes:
   readiness:
     custom: true
@@ -85,9 +77,7 @@ probes:
       httpGet:
         path: /healthz
         port: 8080
-
 # Enable when using searxng builtin rate limiter
 # Values: https://github.com/pascaliske/helm-charts/tree/master/charts/redis
 redis:
   enabled: false
-  

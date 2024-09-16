@@ -1,28 +1,25 @@
+---
 ## This chart relies on the common library chart from bjw-s
 ## You can find it at https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
 ## Refer there for more detail about the supported values
-
 # These entries are shared between all the Immich components
-
 env:
-  REDIS_HOSTNAME: 'redis-master.redis'
-  DB_HOSTNAME: "cluster-rw.cnpg-database"
-  DB_DATABASE_NAME: "immich"
-  DB_USERNAME: 
+  REDIS_HOSTNAME: redis-master.redis
+  DB_HOSTNAME: cluster-rw.cnpg-database
+  DB_DATABASE_NAME: immich
+  DB_USERNAME:
     valueFrom:
       secretKeyRef:
         name: postgresql
         key: DB_USERNAME
-  DB_PASSWORD: 
+  DB_PASSWORD:
     valueFrom:
       secretKeyRef:
         name: postgresql
         key: DB_PASSWORD
   IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
-
 image:
   tag: v1.115.0
-
 immich:
   metrics:
     # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
@@ -43,9 +40,7 @@ immich:
     # storageTemplate:
     #   enabled: true
     #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
-
 # Dependencies
-
 postgresql:
   enabled: false
   image:
@@ -64,15 +59,12 @@ postgresql:
           CREATE EXTENSION cube;
           CREATE EXTENSION earthdistance;
           CREATE EXTENSION vectors;
-
 redis:
   enabled: false
   architecture: standalone
   auth:
     enabled: false
-
 # Immich components
-
 server:
   enabled: true
   image:
@@ -83,17 +75,15 @@ server:
       enabled: true
       annotations:
         # proxy-body-size is set to 0 to remove the body limit on file uploads
-        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-body-size: '0'
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         - host: immich.jahn16.com
           paths:
-            - path: "/"
-      tls: 
-        - hosts:
-          - immich.jahn16.com
+            - path: /
+      tls:
+        - hosts: [immich.jahn16.com]
           secretName: immich-tls
-
 machine-learning:
   enabled: true
   image:
