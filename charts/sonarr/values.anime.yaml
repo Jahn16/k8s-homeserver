@@ -25,7 +25,7 @@ ingress:
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: media-authentik@kubernetescrd
     hosts:
-      - host: sn.jahn16.com
+      - host: sn-anime.jahn16.com
         paths:
           - path: /
             service:
@@ -36,7 +36,7 @@ persistence:
     existingClaim: servarr
     globalMounts:
       - path: /config
-        subPath: sonarr
+        subPath: sonarr-anime
   media:
     existingClaim: media
     globalMounts:
