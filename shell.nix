@@ -5,6 +5,7 @@ pkgs.mkShell {
     kubectl
     kompose
     yamlfix
+    helm-docs
   ];
 }
 
