@@ -42,6 +42,7 @@ Kubernetes: `>=1.22.0-0`
 | controllers.main.containers.main.securityContext.capabilities.add[0] | string | `"NET_ADMIN"` |  |
 | controllers.main.pod.fsGroup | int | `1000` |  |
 | controllers.main.pod.securityGroup | string | `nil` |  |
+| ingress.main.annotations."traefik.ingress.kubernetes.io/router.middlewares" | string | `"media-authentik@kubernetescrd"` |  |
 | ingress.main.className | string | `"traefik"` |  |
 | ingress.main.hosts[0].host | string | `"tm.jahn16.com"` |  |
 | ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
