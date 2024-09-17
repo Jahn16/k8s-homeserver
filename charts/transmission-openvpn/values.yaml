@@ -41,6 +41,8 @@ service:
 ingress:
   main:
     className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: media-authentik@kubernetescrd
     hosts:
       - host: tm.jahn16.com
         paths:
