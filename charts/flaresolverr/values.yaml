@@ -1,0 +1,14 @@
+---
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: flaresolverr/flaresolverr
+          tag: v3.3.21
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: '8191'
