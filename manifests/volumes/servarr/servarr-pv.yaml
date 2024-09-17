@@ -18,4 +18,4 @@ spec:
         - matchExpressions:
             - key: kubernetes.io/hostname
               operator: In
-              values: [jahnvps]
+              values: [vps.jahn16.com]
