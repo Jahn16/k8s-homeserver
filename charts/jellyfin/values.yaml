@@ -1,0 +1,49 @@
+---
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: lscr.io/linuxserver/jellyfin
+          tag: 10.9.11
+        env:
+          - name: PUID
+            value: 1000
+          - name: PGID
+            value: 1000
+          - name: TZ
+            value: Etc/UTC
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 8096
+ingress:
+  main:
+    className: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: jf.jahn16.com
+        paths:
+          - path: /
+            service:
+              identifier: main
+              port: http
+    tls:
+      - secretName: jellyfin-tls
+        hosts: [jf.jahn16.com]
+persistence:
+  cache:
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  config:
+    existingClaim: jellyfin-config
+    accessMode: ReadWriteOnce
+  media:
+    existingClaim: media
+    accessMode: ReadWriteOnce
+    globalMounts:
+      - path: /media
+        subPath: data/media
