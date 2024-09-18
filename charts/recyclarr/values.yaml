@@ -42,8 +42,12 @@ configMaps:
             custom_formats:
               # HDR Formats
               - trash_ids:
+                  - 47435ece6b99a0b477caf360e79ba0bb  # x265 (HD)
+                assign_scores_to:
+                  - name: WEB-1080p
+                    score: 0
+              - trash_ids:
                   - 9b27ab6498ec0f31a3353992e19434ca  # DV (WEBDL)
-                  # HDR10+ Boost - Uncomment the next two lines if any of your devices DO support HDR10+
                   - 0dad0a507451acddd754fe6dc3a7f5e7  # HDR10+ Boost
                   - 385e9e8581d33133c3961bdcdeffb7b4  # DV HDR10+ Boost
                 assign_scores_to:
@@ -65,6 +69,18 @@ configMaps:
               - template: radarr-custom-formats-hd-bluray-web
               - template: radarr-quality-profile-remux-web-2160p
               - template: radarr-custom-formats-remux-web-2160p
+            custom_formats:
+              - trash_ids:
+                  - dc98083864ea246d05a42df0d05f81cc  # x265 (HD)
+                quality_profiles:
+                  - name: HD Bluray + WEB
+                    score: 0
+              - trash_ids:
+                  - 923b6abef9b17f937fab56cfcf89e1f1  # DV (WEBDL)
+                  - b17886cb4158d9fea189859409975758  # HDR10Plus Boost
+                  - 55a5b50cb416dea5a50c4955896217ab  # DV HDR10+ Boost
+                assign_scores_to:
+                  - name: Remux + WEB 2160p
           radarr-anime:
             base_url: http://radarr-anime:7878
             api_key: !env_var RADARR_ANIME_API_KEY
