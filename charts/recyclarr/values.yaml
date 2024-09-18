@@ -1,0 +1,74 @@
+---
+controllers:
+  main:
+    type: cronjob
+    cronjob:
+      timeZone: Etc/UTC
+      schedule: '@daily'
+    containers:
+      main:
+        image:
+          repository: recyclarr/recyclarr
+          tag: 7.2.4
+        args: [sync]
+        envFrom:
+          - secretRef:
+              name: '{{ .Release.Name }}'
+persistence:
+  config:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  config-file:
+    type: configMap
+    identifier: config
+    globalMounts:
+      - path: /config/recyclarr.yml
+        subPath: recyclarr.yml
+configMaps:
+  config:
+    data:
+      recyclarr.yml: |-
+        sonarr:
+          sonarr:
+            base_url: http://sonarr:8989
+            api_key: !env_var SONARR_API_KEY
+            include:
+              - template: sonarr-quality-definition-series
+              - template: sonarr-v4-quality-profile-web-1080p
+              - template: sonarr-v4-custom-formats-web-1080p
+              - template: sonarr-v4-quality-profile-web-2160p
+              - template: sonarr-v4-custom-formats-web-2160p
+            custom_formats:
+              # HDR Formats
+              - trash_ids:
+                  - 9b27ab6498ec0f31a3353992e19434ca  # DV (WEBDL)
+                  # HDR10+ Boost - Uncomment the next two lines if any of your devices DO support HDR10+
+                  - 0dad0a507451acddd754fe6dc3a7f5e7  # HDR10+ Boost
+                  - 385e9e8581d33133c3961bdcdeffb7b4  # DV HDR10+ Boost
+                assign_scores_to:
+                  - name: WEB-2160p
+          anime:
+            base_url: http://sonarr-anime:8989
+            api_key: !env_var SONARR_ANIME_API_KEY
+            include:
+              - template: sonarr-quality-definition-anime
+              - template: sonarr-v4-quality-profile-anime
+              - template: sonarr-v4-custom-formats-anime
+        radarr:
+          radarr:
+            base_url: http://radarr:7878
+            api_key: !env_var RADARR_API_KEY
+            include:
+              - template: radarr-quality-definition-movie
+              - template: radarr-quality-profile-hd-bluray-web
+              - template: radarr-custom-formats-hd-bluray-web
+              - template: radarr-quality-profile-remux-web-2160p
+              - template: radarr-custom-formats-remux-web-2160p
+          radarr-anime:
+            base_url: http://radarr-anime:7878
+            api_key: !env_var RADARR_ANIME_API_KEY
+            include:
+              - template: radarr-quality-definition-movie
+              - template: radarr-quality-profile-anime
+              - template: radarr-custom-formats-anime
