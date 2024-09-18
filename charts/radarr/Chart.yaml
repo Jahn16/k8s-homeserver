@@ -1,0 +1,12 @@
+---
+apiVersion: v2
+name: sonarr
+version: 1.0.0
+kubeVersion: '>=1.22.0-0'
+maintainers:
+  - name: Jahn16
+    email: jpdeoliveiraferreira@gmail.com
+dependencies:
+  - name: common
+    repository: https://bjw-s.github.io/helm-charts
+    version: 3.4.0

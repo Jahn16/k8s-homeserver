@@ -1,0 +1,44 @@
+---
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: lscr.io/linuxserver/radarr
+          tag: 5.9.1.9070-ls237
+        env:
+          - name: PUID
+            value: 1000
+          - name: PGID
+            value: 1000
+          - name: TZ
+            value: Etc/UTC
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 7878
+ingress:
+  main:
+    className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: media-authentik@kubernetescrd
+    hosts:
+      - host: rd-anime.jahn16.com
+        paths:
+          - path: /
+            service:
+              identifier: main
+              port: http
+persistence:
+  config:
+    existingClaim: servarr
+    globalMounts:
+      - path: /config
+        subPath: radarr-anime
+  media:
+    existingClaim: media
+    globalMounts:
+      - path: /data
+        subpath: data
